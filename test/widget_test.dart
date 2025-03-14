@@ -35,13 +35,42 @@ void main() {
   });
 
   testWidgets('Widget login validación campo vacio email',
-      (WidgetTester tester) async {});
+      (WidgetTester tester) async {
+    expect(find.byKey(const Key('LoginScreen')), findsOneWidget);
 
-  testWidgets('Widget login validación número de caracteres password',
-      (WidgetTester tester) async {});
+    await tester.enterText(
+        find.byKey(const Key('TextFormFieldLoginEmail')), '');
 
-  testWidgets('Widget login validación campo vacio password',
-      (WidgetTester tester) async {});
+    await tester.enterText(
+        find.byKey(const Key('TextFormFieldLoginPassword')), '123456');
+
+    await tester.tap(find.byKey(const Key('ButtonLoginSubmit')));
+
+    await tester.pumpAndSettle();
+
+    expect(find.text('Enter email'), findsOneWidget);
+  });
+
+  testWidgets('Widget login validación número de caracteres password', (WidgetTester tester) async {
+    expect(find.byKey(const Key('LoginScreen')), findsOneWidget);
+
+    await tester.enterText(
+        find.byKey(const Key('TextFormFieldLoginEmail')), 's@s.com');
+
+    await tester.enterText(
+        find.byKey(const Key('TextFormFieldLoginPassword')), '123');
+
+    await tester.tap(find.byKey(const Key('ButtonLoginSubmit')));
+
+    await tester.pumpAndSettle();
+
+    expect(find.text('Password should have at least 6 characters'),
+        findsOneWidget);
+  });
+
+  testWidgets('Widget login validación campo vacio password', (WidgetTester tester) async {
+     expect(find.byKey(const Key('LoginScreen')), findsOneWidget);
+  });
 
   testWidgets(
       'Widget login autenticación exitosa', (WidgetTester tester) async {});
