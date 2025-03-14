@@ -29,7 +29,22 @@ void main() {
   });
 
   testWidgets('Widget login validación campo vacio email',
-      (WidgetTester tester) async {});
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const GetMaterialApp(
+        home: LoginScreen(email: 'test@example.com', password: '123456'),
+      ),
+    );
+
+    final emailField = find.byKey(const Key('TextFormFieldLoginEmail'));
+    final submitButton = find.byKey(const Key('ButtonLoginSubmit'));
+
+    await tester.enterText(emailField, '');
+    await tester.tap(submitButton);
+    await tester.pump();
+
+    expect(find.text('Enter email'), findsOneWidget);
+  });
 
   testWidgets('Widget login validación número de caracteres password',
       (WidgetTester tester) async {});
