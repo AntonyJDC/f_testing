@@ -28,8 +28,7 @@ void main() {
     expect(find.text('Enter valid email address'), findsOneWidget);
   });
 
-  testWidgets('Widget login validación campo vacio email',
-      (WidgetTester tester) async {
+  testWidgets('Widget login validación campo vacio email', (WidgetTester tester) async {
     await tester.pumpWidget(
       const GetMaterialApp(
         home: LoginScreen(email: 'test@example.com', password: '123456'),
@@ -46,11 +45,26 @@ void main() {
     expect(find.text('Enter email'), findsOneWidget);
   });
 
-  testWidgets('Widget login validación número de caracteres password',
-      (WidgetTester tester) async {});
+  testWidgets('Widget login validación número de caracteres password', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const GetMaterialApp(
+        home: LoginScreen(email: 'test@example.com', password: '123456'),
+      ),
+    );
 
-  testWidgets('Widget login validación campo vacio password',
-      (WidgetTester tester) async {});
+    final passwordField = find.byKey(const Key('TextFormFieldLoginPassword'));
+    final submitButton = find.byKey(const Key('ButtonLoginSubmit'));
+
+    await tester.enterText(passwordField, '122');
+    await tester.tap(submitButton);
+    await tester.pump();
+
+    expect(find.text('Password should have at least 6 characters'), findsOneWidget);
+  });
+
+  testWidgets('Widget login validación campo vacio password', (WidgetTester tester) async {
+     
+  });
 
   testWidgets(
       'Widget login autenticación exitosa', (WidgetTester tester) async {});
