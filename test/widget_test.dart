@@ -63,7 +63,20 @@ void main() {
   });
 
   testWidgets('Widget login validación campo vacio password', (WidgetTester tester) async {
-     
+     await tester.pumpWidget(
+      const GetMaterialApp(
+        home: LoginScreen(email: 'test@example.com', password: '123456'),
+      ),
+    );
+
+    final passwordField = find.byKey(const Key('TextFormFieldLoginPassword'));
+    final submitButton = find.byKey(const Key('ButtonLoginSubmit'));
+
+    await tester.enterText(passwordField, '');
+    await tester.tap(submitButton);
+    await tester.pump();
+
+    expect(find.text('Enter password'), findsOneWidget);
   });
 
   testWidgets(
