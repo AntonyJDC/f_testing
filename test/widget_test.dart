@@ -79,11 +79,29 @@ void main() {
     expect(find.text('Enter password'), findsOneWidget);
   });
 
-  testWidgets(
-      'Widget login autenticación exitosa', (WidgetTester tester) async {});
+  testWidgets('Widget login autenticación exitosa', (WidgetTester tester) async {
+     await tester.pumpWidget(
+      const GetMaterialApp(
+        home: LoginScreen(email: 'test@example.com', password: '123456'),
+      ),
+    );
 
-  testWidgets(
-      'Widget login autenticación no exitosa', (WidgetTester tester) async {});
+    final emailField = find.byKey(const Key('TextFormFieldLoginEmail'));
+    final passwordField = find.byKey(const Key('TextFormFieldLoginPassword'));
+    final submitButton = find.byKey(const Key('ButtonLoginSubmit'));
+
+    await tester.enterText(emailField, 'test@example.com');
+    await tester.enterText(passwordField, '123456');
+
+    await tester.tap(submitButton);
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('HomePage')), findsOneWidget);
+  });
+
+  testWidgets('Widget login autenticación no exitosa', (WidgetTester tester) async {
+     
+  });
 
   testWidgets(
       'Widget signUp validación @ email', (WidgetTester tester) async {});
