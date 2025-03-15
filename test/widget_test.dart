@@ -6,6 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:f_testing_template/ui/pages/authentication/login.dart';
+import 'package:f_testing_template/ui/pages/authentication/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,8 @@ void main() {
     expect(find.text('Enter valid email address'), findsOneWidget);
   });
 
-  testWidgets('Widget login validación campo vacio email', (WidgetTester tester) async {
+  testWidgets('Widget login validación campo vacio email',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const GetMaterialApp(
         home: LoginScreen(email: 'test@example.com', password: '123456'),
@@ -45,7 +47,8 @@ void main() {
     expect(find.text('Enter email'), findsOneWidget);
   });
 
-  testWidgets('Widget login validación número de caracteres password', (WidgetTester tester) async {
+  testWidgets('Widget login validación número de caracteres password',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const GetMaterialApp(
         home: LoginScreen(email: 'test@example.com', password: '123456'),
@@ -59,11 +62,13 @@ void main() {
     await tester.tap(submitButton);
     await tester.pump();
 
-    expect(find.text('Password should have at least 6 characters'), findsOneWidget);
+    expect(find.text('Password should have at least 6 characters'),
+        findsOneWidget);
   });
 
-  testWidgets('Widget login validación campo vacio password', (WidgetTester tester) async {
-     await tester.pumpWidget(
+  testWidgets('Widget login validación campo vacio password',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
       const GetMaterialApp(
         home: LoginScreen(email: 'test@example.com', password: '123456'),
       ),
@@ -79,8 +84,9 @@ void main() {
     expect(find.text('Enter password'), findsOneWidget);
   });
 
-  testWidgets('Widget login autenticación exitosa', (WidgetTester tester) async {
-     await tester.pumpWidget(
+  testWidgets('Widget login autenticación exitosa',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
       const GetMaterialApp(
         home: LoginScreen(email: 'test@example.com', password: '123456'),
       ),
@@ -99,8 +105,9 @@ void main() {
     expect(find.byKey(const Key('HomePage')), findsOneWidget);
   });
 
-  testWidgets('Widget login autenticación no exitosa', (WidgetTester tester) async {
-     await tester.pumpWidget(
+  testWidgets('Widget login autenticación no exitosa',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
       const GetMaterialApp(
         home: LoginScreen(email: 'test@example.com', password: '123456'),
       ),
@@ -121,8 +128,22 @@ void main() {
     expect(find.byKey(const Key('HomePage')), findsNothing);
   });
 
-  testWidgets(
-      'Widget signUp validación @ email', (WidgetTester tester) async {});
+  testWidgets('Widget signUp validación @ email', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const GetMaterialApp(
+        home: SignUpPage(),
+      ),
+    );
+
+    final emailField = find.byKey(const Key('TextFormFieldSignUpEmail'));
+    final submitButton = find.byKey(const Key('ButtonSignUpSubmit'));
+
+    await tester.enterText(emailField, 'usuario_invalido');
+    await tester.tap(submitButton);
+    await tester.pump();
+
+    expect(find.text('Enter valid email address'), findsOneWidget);
+  });
 
   testWidgets('Widget signUp validación campo vacio email',
       (WidgetTester tester) async {});
