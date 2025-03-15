@@ -145,8 +145,22 @@ void main() {
     expect(find.text('Enter valid email address'), findsOneWidget);
   });
 
-  testWidgets('Widget signUp validación campo vacio email',
-      (WidgetTester tester) async {});
+  testWidgets('Widget signUp validación campo vacio email', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const GetMaterialApp(
+        home: SignUpPage(),
+      ),
+    );
+
+    final emailField = find.byKey(const Key('TextFormFieldSignUpEmail'));
+    final submitButton = find.byKey(const Key('ButtonSignUpSubmit'));
+
+    await tester.enterText(emailField, '');
+    await tester.tap(submitButton);
+    await tester.pump();
+
+    expect(find.text('Enter email'), findsOneWidget);
+  });
 
   testWidgets('Widget signUp validación número de caracteres password',
       (WidgetTester tester) async {});
