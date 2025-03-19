@@ -162,8 +162,22 @@ void main() {
     expect(find.text('Enter email'), findsOneWidget);
   });
 
-  testWidgets('Widget signUp validación número de caracteres password',
-      (WidgetTester tester) async {});
+  testWidgets('Widget signUp validación número de caracteres password', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const GetMaterialApp(
+        home: SignUpPage(),
+      ),
+    );
+
+    final passwordField = find.byKey(const Key('TextFormFieldSignUpPassword'));
+    final submitButton = find.byKey(const Key('ButtonSignUpSubmit'));
+
+    await tester.enterText(passwordField, '122');
+    await tester.tap(submitButton);
+    await tester.pump();
+
+    expect(find.text('Password should have at least 6 characters'), findsOneWidget);
+  });
 
   testWidgets('Widget signUp validación campo vacio password',
       (WidgetTester tester) async {});
